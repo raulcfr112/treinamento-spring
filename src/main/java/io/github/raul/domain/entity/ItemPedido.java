@@ -1,13 +1,23 @@
 package io.github.raul.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "item_pedido")
 public class ItemPedido {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
     private  Pedido pedido;
-    private LocalDate dataPedido;
-    private BigDecimal total;
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
+    @Column(name = "quantidade")
+    private Integer quantidade;
 
     public Integer getId() {
         return id;
@@ -25,19 +35,19 @@ public class ItemPedido {
         this.pedido = pedido;
     }
 
-    public LocalDate getDataPedido() {
-        return dataPedido;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setDataPedido(LocalDate dataPedido) {
-        this.dataPedido = dataPedido;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }
