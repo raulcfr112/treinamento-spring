@@ -2,6 +2,7 @@ package io.github.raul.service.impl;
 
 import io.github.raul.domain.entity.Usuario;
 import io.github.raul.domain.repository.UsuarioRepository;
+import io.github.raul.rest.dto.InformacoesUsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +22,12 @@ public class UsuarioServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Transactional
-    public Usuario salvar(Usuario usuario){
-        return usuarioRepository.save(usuario);
+    public InformacoesUsuarioDTO salvar(Usuario usuario){
+        InformacoesUsuarioDTO dto = new InformacoesUsuarioDTO();
+        dto.setUsername(usuario.getLogin());
+        dto.setAdmin(usuario.isAdmin());
+        usuarioRepository.save(usuario);
+        return dto;
     }
 
     @Override

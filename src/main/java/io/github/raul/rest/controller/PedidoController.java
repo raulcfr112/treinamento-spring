@@ -49,7 +49,7 @@ public class PedidoController {
     public void updateStatus(@PathVariable Integer id,
                              @RequestBody AtualizacaoStatusPedidoDTO dto) {
         String novoStatus = dto.getNovoStatus();
-        service.atualizaStauts(id, StatusPedido.valueOf(novoStatus));
+        service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
     }
 
     private InformacoesPedidoDTO converter(Pedido pedido) {

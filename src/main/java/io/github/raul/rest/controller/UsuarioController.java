@@ -1,6 +1,7 @@
 package io.github.raul.rest.controller;
 
 import io.github.raul.domain.entity.Usuario;
+import io.github.raul.rest.dto.InformacoesUsuarioDTO;
 import io.github.raul.service.impl.UsuarioServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario salvar( @Valid @RequestBody Usuario usuario){
+    public InformacoesUsuarioDTO salvar(@Valid @RequestBody Usuario usuario){
         String senhaCriptografada = encoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
         return usuarioService.salvar(usuario);

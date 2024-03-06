@@ -59,7 +59,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     @Transactional
-    public void atualizaStauts(Integer id, StatusPedido statusPedido) {
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
         pedidosRepository
                 .findById(id)
                 .map(pedido -> {
