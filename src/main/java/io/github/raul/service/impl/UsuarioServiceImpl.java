@@ -2,7 +2,7 @@ package io.github.raul.service.impl;
 
 import io.github.raul.domain.entity.Usuario;
 import io.github.raul.domain.repository.UsuarioRepository;
-import io.github.raul.rest.dto.InformacoesUsuarioDTO;
+import io.github.raul.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +22,22 @@ public class UsuarioServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Transactional
-    public InformacoesUsuarioDTO salvar(Usuario usuario){
-        InformacoesUsuarioDTO dto = new InformacoesUsuarioDTO();
-        dto.setUsername(usuario.getLogin());
-        dto.setAdmin(usuario.isAdmin());
+    public Usuario salvar(Usuario usuario){
+        usuario.setLogin(usuario.getLogin());
+        usuario.setAdmin(usuario.isAdmin());
         usuarioRepository.save(usuario);
-        return dto;
+        return usuario;
+    }
+
+    public UserDetails autenticar( Usuario usuario ){
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+        boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+
+        if (senhasBatem){
+            return user;
+        }
+
+        throw new SenhaInvalidaException();
     }
 
     @Override
